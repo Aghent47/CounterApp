@@ -1,5 +1,5 @@
 import React from 'react';
-import { TouchableNativeFeedback, View, Text, StyleSheet } from 'react-native';
+import { TouchableNativeFeedback, View, Text, StyleSheet, Platform, TouchableOpacity } from 'react-native';
 
 interface Props {
     title: string;
@@ -8,18 +8,36 @@ interface Props {
 }
 
 export const Fab = ({ title, onPress, position = 'br' }: Props) => {
-    return (
-        <>
+
+    const ios = () => {
+        return (
+            <TouchableOpacity
+            onPress={onPress}
+            activeOpacity={ 0.75 }
+            style={[styles.buttonLocation, (position === 'bl' ? styles.left : styles.right)]}>
+                <View style={[styles.buttom]}  >
+                    <Text style={styles.contentButtom} > {title} </Text>
+                </View>
+            </TouchableOpacity>
+        );
+    };
+
+    const android = () => {
+        return (
             <View style={[styles.buttonLocation, (position === 'bl' ? styles.left : styles.right)]}>
                 <TouchableNativeFeedback onPress={onPress}
-                background={TouchableNativeFeedback.Ripple('#28425B', false, 30)}
-                >
+                    background={TouchableNativeFeedback.Ripple('#28425B', false, 25)}>
                     <View style={[styles.buttom]}  >
                         <Text style={styles.contentButtom} > {title} </Text>
                     </View>
                 </TouchableNativeFeedback>
             </View>
-        </>
+        );
+    };
+
+
+    return (
+        Platform.OS === 'ios' ? ios() : android()
     );
 };
 
