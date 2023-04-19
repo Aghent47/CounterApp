@@ -21,6 +21,12 @@ export const Counter = () => {
 
                 <Fab
                     title="+1"
+                    onPress={handlePressAdd}
+                />
+                <Fab
+                    title="-1"
+                    position='bl'
+                    onPress={handlePressRest}
                 />
             {/* <TouchableOpacity onPress={handlePressRest} style={styles.buttonLocationBL} >
                 <View style={[styles.buttom]}  >
